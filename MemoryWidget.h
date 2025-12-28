@@ -8,7 +8,6 @@ class MemoryWidget : public QWidget {
     Q_OBJECT
 public:
     explicit MemoryWidget(QWidget *parent = nullptr);
-    // 传入管理器指针，以便获取数据绘图
     void setManager(MemoryManager *mgr);
 
 protected:

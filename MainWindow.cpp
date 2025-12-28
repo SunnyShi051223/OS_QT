@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QVBoxLayout *layout = new QVBoxLayout(centralWidget);
 
     // --- 1. 初始化区域 ---
+    // (保持不变) ...
     QHBoxLayout *initLayout = new QHBoxLayout;
     editTotalSize = new QLineEdit("100");
     editTotalSize->setPlaceholderText("总内存大小 (KB)");
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // --- 2. 可视化视图 ---
     memoryView = new MemoryWidget;
-    memoryView->setManager(&memoryManager); // 绑定管理器
+    memoryView->setManager(&memoryManager);
     layout->addWidget(memoryView);
 
     // --- 3. 操作区域 (分配) ---
@@ -41,17 +42,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     editSegSizes = new QLineEdit();
     editSegSizes->setPlaceholderText("各段大小，用空格隔开 (如: 10 20 5)");
 
-    QPushButton *btnAlloc = new QPushButton("申请分配 (最坏适应算法)");
+    // --- 新增：初始化算法下拉框 ---
+    QHBoxLayout *algoLayout = new QHBoxLayout;
+    comboAlgo = new QComboBox();
+    comboAlgo->addItem("最先适应算法 (First Fit)");
+    comboAlgo->addItem("最佳适应算法 (Best Fit)");
+    comboAlgo->addItem("最坏适应算法 (Worst Fit)");
+    // 默认选中最坏适应 (索引2)，或者你也可以默认选第一个
+    comboAlgo->setCurrentIndex(0);
+
+    algoLayout->addWidget(new QLabel("分配算法:"));
+    algoLayout->addWidget(comboAlgo);
+
+    QPushButton *btnAlloc = new QPushButton("执行申请分配"); // 文字改通用一点
 
     allocLayout->addLayout(pidLayout);
     allocLayout->addLayout(segLayout);
     allocLayout->addWidget(new QLabel("各段大小:"));
     allocLayout->addWidget(editSegSizes);
+    allocLayout->addLayout(algoLayout); // 添加算法选择栏
     allocLayout->addWidget(btnAlloc);
 
     layout->addWidget(allocGroup);
 
     // --- 4. 操作区域 (回收) ---
+    // (保持不变) ...
     QHBoxLayout *freeLayout = new QHBoxLayout;
     QPushButton *btnFree = new QPushButton("回收该进程");
     freeLayout->addWidget(btnFree);
@@ -62,21 +77,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     layout->addWidget(statusLabel);
 
     setCentralWidget(centralWidget);
-    setWindowTitle("段式存储管理 - 最坏适应算法模拟");
-    resize(600, 700);
+    setWindowTitle("段式存储管理模拟系统"); // 标题改通用一点
+    resize(600, 750); //稍微调高一点高度
 
-    // 连接信号槽
     connect(btnInit, &QPushButton::clicked, this, &MainWindow::onInitClicked);
     connect(btnAlloc, &QPushButton::clicked, this, &MainWindow::onAllocClicked);
     connect(btnFree, &QPushButton::clicked, this, &MainWindow::onFreeClicked);
 
-    // 默认初始化一次
     onInitClicked();
 }
 
 MainWindow::~MainWindow() {}
 
 void MainWindow::onInitClicked() {
+    // (保持不变) ...
     int size = editTotalSize->text().toInt();
     if (size <= 0) {
         QMessageBox::warning(this, "错误", "内存大小必须为正整数");
@@ -96,8 +110,9 @@ void MainWindow::onAllocClicked() {
     if (!ok || count <= 0) { QMessageBox::warning(this, "Input Error", "段数无效"); return; }
 
     QString sizeStr = editSegSizes->text();
-    // 新写法 (使用 Qt 命名空间)
+    // 使用新版Qt写法
     QStringList strList = sizeStr.split(" ", Qt::SkipEmptyParts);
+
     if (strList.size() != count) {
         QMessageBox::warning(this, "Input Error", "输入的段大小数量与段数不匹配！");
         return;
@@ -113,9 +128,14 @@ void MainWindow::onAllocClicked() {
         sizes.push_back(sz);
     }
 
-    // 调用核心算法
-    if (memoryManager.requestMemory(pid, count, sizes)) {
-        statusLabel->setText(QString("进程 %1 分配成功").arg(pid));
+    AllocationAlgo selectedAlgo;
+    int index = comboAlgo->currentIndex();
+    if (index == 0) selectedAlgo = FIRST_FIT;
+    else if (index == 1) selectedAlgo = BEST_FIT;
+    else selectedAlgo = WORST_FIT;
+
+    if (memoryManager.requestMemory(pid, count, sizes, selectedAlgo)) {
+        statusLabel->setText(QString("进程 %1 分配成功 (%2)").arg(pid).arg(comboAlgo->currentText()));
         memoryView->update();
     } else {
         QMessageBox::critical(this, "分配失败", "内存不足，分配失败！(已回滚)");
