@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <QMessageBox>
 #include <QStringList>
+#include <QGroupBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *centralWidget = new QWidget;
@@ -95,8 +96,8 @@ void MainWindow::onAllocClicked() {
     if (!ok || count <= 0) { QMessageBox::warning(this, "Input Error", "段数无效"); return; }
 
     QString sizeStr = editSegSizes->text();
-    QStringList strList = sizeStr.split(" ", QString::SkipEmptyParts);
-
+    // 新写法 (使用 Qt 命名空间)
+    QStringList strList = sizeStr.split(" ", Qt::SkipEmptyParts);
     if (strList.size() != count) {
         QMessageBox::warning(this, "Input Error", "输入的段大小数量与段数不匹配！");
         return;

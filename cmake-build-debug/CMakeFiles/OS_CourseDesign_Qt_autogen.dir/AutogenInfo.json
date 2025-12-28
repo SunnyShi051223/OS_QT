@@ -78,7 +78,27 @@
 	"CMAKE_SOURCE_DIR" : "D:/c_cpp/OS_QT",
 	"DEP_FILE" : "D:/c_cpp/OS_QT/cmake-build-debug/OS_CourseDesign_Qt_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "OS_CourseDesign_Qt_autogen/timestamp",
-	"HEADERS" : [],
+	"HEADERS" : 
+	[
+		[
+			"D:/c_cpp/OS_QT/MainWindow.h",
+			"MU",
+			"EWIEGA46WW/moc_MainWindow.cpp",
+			null
+		],
+		[
+			"D:/c_cpp/OS_QT/MemoryManager.h",
+			"MU",
+			"EWIEGA46WW/moc_MemoryManager.cpp",
+			null
+		],
+		[
+			"D:/c_cpp/OS_QT/MemoryWidget.h",
+			"MU",
+			"EWIEGA46WW/moc_MemoryWidget.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "D:/c_cpp/OS_QT/cmake-build-debug/OS_CourseDesign_Qt_autogen/include",
 	"MOC_COMPILATION_FILE" : "D:/c_cpp/OS_QT/cmake-build-debug/OS_CourseDesign_Qt_autogen/mocs_compilation.cpp",
@@ -129,7 +149,13 @@
 	"QT_VERSION_MAJOR" : 5,
 	"QT_VERSION_MINOR" : 15,
 	"SETTINGS_FILE" : "D:/c_cpp/OS_QT/cmake-build-debug/CMakeFiles/OS_CourseDesign_Qt_autogen.dir/AutogenUsed.txt",
-	"SOURCES" : [],
+	"SOURCES" : 
+	[
+		[ "D:/c_cpp/OS_QT/MainWindow.cpp", "MU", null ],
+		[ "D:/c_cpp/OS_QT/MemoryManager.cpp", "MU", null ],
+		[ "D:/c_cpp/OS_QT/MemoryWidget.cpp", "MU", null ],
+		[ "D:/c_cpp/OS_QT/main.cpp", "MU", null ]
+	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : [],

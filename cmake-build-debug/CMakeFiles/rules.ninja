@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: OS_QT
+# Project: OS_CourseDesign_Qt
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -14,7 +14,7 @@
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__OS_QT_unscanned_Debug
+rule CXX_COMPILER__OS_CourseDesign_Qt_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}D:\MSYS2\mingw64\bin\c++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -24,7 +24,7 @@ rule CXX_COMPILER__OS_QT_unscanned_Debug
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__OS_QT_Debug
+rule CXX_EXECUTABLE_LINKER__OS_CourseDesign_Qt_Debug
   command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && D:\MSYS2\mingw64\bin\c++.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -45,6 +45,14 @@ rule RERUN_CMAKE
   command = "D:\Clion\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SD:\c_cpp\OS_QT -BD:\c_cpp\OS_QT\cmake-build-debug
   description = Re-running CMake...
   generator = 1
+
+
+#############################################
+# Rule for cleaning additional files.
+
+rule CLEAN_ADDITIONAL
+  command = "D:\Clion\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" -DCONFIG=$CONFIG -P CMakeFiles\clean_additional.cmake
+  description = Cleaning additional files...
 
 
 #############################################
