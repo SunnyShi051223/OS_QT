@@ -1,0 +1,5 @@
+D:/c_cpp/OS_QT/cmake-build-debug/CMakeFiles/OS_CourseDesign_Qt.dir
+D:/c_cpp/OS_QT/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/c_cpp/OS_QT/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/c_cpp/OS_QT/cmake-build-debug/CMakeFiles/OS_CourseDesign_Qt_autogen_timestamp_deps.dir
+D:/c_cpp/OS_QT/cmake-build-debug/CMakeFiles/OS_CourseDesign_Qt_autogen.dir
